@@ -275,18 +275,99 @@
             0%, 60%, 100% { transform: translateY(0); }
             30% { transform: translateY(-4px); }
         }
+
+        /* Overlay de fechado */
+        .closed-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 15, 26, 0.92);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .closed-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .closed-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+        }
+
+        .closed-text {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .closed-hours {
+            background: var(--header-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 24px;
+            font-size: 14px;
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .closed-hours span {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        /* Indicador de status no header */
+        .status-closed p {
+            color: var(--accent-color) !important;
+        }
+
+        .status-closed p::before {
+            background-color: var(--accent-color) !important;
+        }
     </style>
 </head>
 <body>
 
     <div class="app-container">
-        <header class="chat-header">
+        <header class="chat-header" id="chat-header">
             <div class="avatar">🍕</div>
             <div class="header-info">
                 <h1>Pizzaria Fornalha de Ourinhos</h1>
-                <p>No final, meu humano te informa o tempo para entrega ou retirada.</p>
+                <p id="status-text">No final, um atendente te informa o tempo para entrega ou retirada.</p>
             </div>
         </header>
+
+        <!-- Overlay exibido fora do horário de funcionamento -->
+        <div class="closed-overlay" id="closed-overlay" style="display:none;">
+            <div class="closed-icon">🍕</div>
+            <div class="closed-title">Estamos fechados no momento</div>
+            <div class="closed-text">
+                Nosso sistema de pedidos online está disponível<br>
+                apenas durante o horário de funcionamento.
+            </div>
+            <div class="closed-hours">
+                🗓️ <strong>Segunda a Sábado</strong><br>
+                <span>17:30</span> às <span>23:30</span>
+            </div>
+            <div style="margin-top:20px; font-size:13px; color:var(--text-muted);">
+                Volte mais tarde e faça seu pedido! 😊
+            </div>
+        </div>
 
         <main class="chat-body" id="chat-body"></main>
 
@@ -565,18 +646,19 @@
                 { id: 'b9', name: 'Sprite 2L', price: 12.00 },
                 { id: 'b10', name: 'Conquista Guaraná 2L', price: 9.00},
                 { id: 'b11', name: 'Conti Cola 2L', price: 9.00 },
-                { id: 'b12', name: 'Coca-Cola Lata', price: 5.00 },
-                { id: 'b13', name: 'Coca-Cola  Zero Lata', price: 5.00 },
-                { id: 'b14', name: 'Guaraná Antárctica Lata', price: 5.00},
-                { id: 'b15', name: 'Guaraná Antárctica Zero Lata', price: 5.00},
-                { id: 'b16', name: 'Fanta Lata', price: 5.00},
-                { id: 'b17', name: 'Sprite Lata', price: 5.00 },
-                { id: 'b18', name: 'Energético Monster Lata', price: 12.00 },
-                { id: 'b19', name: 'Energético Red Bull Lata', price: 12.00 },
-                { id: 'b20', name: 'Cerveja Skol Lata', price: 5.00},
-                { id: 'b21', name: 'Cerveja Brahma Lata', price: 5.00 },
-                { id: 'b22', name: 'Cerveja Boa Lata', price: 5.00 },
-                { id: 'b23', name: 'Cerveja Malzbeer', price: 5.00 }
+                { id: 'b12', name: 'H2O Limoneto 500ml', price: 4.50},
+                { id: 'b13', name: 'Coca-Cola Lata', price: 5.00 },
+                { id: 'b14', name: 'Coca-Cola  Zero Lata', price: 5.00 },
+                { id: 'b15', name: 'Guaraná Antárctica Lata', price: 5.00},
+                { id: 'b16', name: 'Guaraná Antárctica Zero Lata', price: 5.00},
+                { id: 'b17', name: 'Fanta Lata', price: 5.00},
+                { id: 'b18', name: 'Sprite Lata', price: 5.00 },
+                { id: 'b19', name: 'Energético Monster Lata', price: 12.00 },
+                { id: 'b20', name: 'Energético Red Bull Lata', price: 12.00 },
+                { id: 'b21', name: 'Cerveja Skol Lata', price: 5.00},
+                { id: 'b22', name: 'Cerveja Brahma Lata', price: 5.00 },
+                { id: 'b23', name: 'Cerveja Boa Lata', price: 5.00 },
+                { id: 'b24', name: 'Cerveja Malzbeer', price: 5.00 }
             ],
             bordas: {
                 doce: [
@@ -718,7 +800,38 @@
             }, 600);
         }
 
+        // ─── Verificação de horário de funcionamento ───────────────────────────
+        // Seg-Sáb: 17:30 às 23:30  (domingo: fechado)
+        function verificarHorario() {
+            const agora = new Date();
+            const diaSemana = agora.getDay(); // 0=Dom, 1=Seg … 6=Sáb
+            const hora = agora.getHours();
+            const minuto = agora.getMinutes();
+            const totalMinutos = hora * 60 + minuto;
+
+            const abertura = 17 * 60 + 30;  // 17:30
+            const fechamento = 23 * 60 + 30; // 23:30
+
+            // Seg(1) a Sáb(6) e dentro do horário
+            const aberto = diaSemana >= 1 && diaSemana <= 6
+                        && totalMinutos >= abertura
+                        && totalMinutos < fechamento;
+
+            return aberto;
+        }
+
         window.onload = () => {
+            if (!verificarHorario()) {
+                // Fora do horário: mostra overlay e oculta o chat
+                document.getElementById('closed-overlay').style.display = 'flex';
+                document.getElementById('chat-header').classList.add('status-closed');
+                document.getElementById('status-text').textContent = 'Fechado no momento';
+                // Desabilita input para garantia
+                userInput.disabled = true;
+                sendBtn.disabled = true;
+                return; // Não inicia o bot
+            }
+
             addBotMessage("Olá! 👋 Sou o assistente virtual da Pizzaria Fornalha de Ourinhos.");
             setTimeout(perguntarTipoEntrega, 1200);
         };
@@ -748,7 +861,7 @@
                 case 'PEDIR_ALTERACAO':
                     state = 'WAITING_ALTERACAO';
                     setTimeout(() => {
-                        addBotMessage("AVISO: Essa alteração pode modificar o valor final do seu pedido, mas meu humano te informará corretamente no final desse atendimento.");
+                        addBotMessage("AVISO: A inclusão de novos ingredientes podem alterar os valores, mas um atendente te informará corretamente no final desse atendimento.");
                         addBotMessage("Digite a alteração desejada:");
                         setInputMode(true, "Ex: sem cebola, sem azeitona...");
                     }, 300);
@@ -761,6 +874,22 @@
                     tempOrder = {};
                     addBotMessage("Item cancelado.");
                     mostrarMenuPrincipal();
+                    break;
+                case 'PAGAMENTO_CARTAO':
+                    cliente.pagamento = 'Cartão de crédito/débito';
+                    enviarParaWhatsApp();
+                    break;
+                case 'PAGAMENTO_PIX':
+                    cliente.pagamento = 'Pix';
+                    mostrarChavePix();
+                    break;
+                case 'PAGAMENTO_DINHEIRO':
+                    cliente.pagamento = 'Dinheiro';
+                    perguntarTroco();
+                    break;
+                case 'TROCO_NAO':
+                    cliente.troco = 'Sem troco';
+                    enviarParaWhatsApp();
                     break;
             }
         };
@@ -797,6 +926,11 @@
                 setInputMode(false, "Selecione uma opção acima...");
                 state = 'MENU';
                 setTimeout(() => { addBotMessage(`Olá, ${cliente.nome}! Vamos montar seu pedido. 🍕`); setTimeout(mostrarMenuPrincipal, 800); }, 500);
+            } else if (state === 'WAITING_TROCO') {
+                cliente.troco = `Troco para R$ ${text}`;
+                setInputMode(false, "Selecione uma opção acima...");
+                state = 'DONE';
+                setTimeout(enviarParaWhatsApp, 400);
             } else if (state === 'WAITING_ALTERACAO') {
                 const idx = tempOrder.saboresSelecionados.length - 1;
                 tempOrder.saboresSelecionados[idx].observacao = text;
@@ -814,7 +948,7 @@
             cliente.tipoEntrega = tipo;
             if (tipo === 'entrega') {
                 state = 'WAITING_NAME_ENTREGA';
-                setTimeout(() => { addBotMessage("Ótimo! Para entrega, vou precisar de algumas informações. Primeiro, qual o seu <b>nome</b>?"); setInputMode(true, "Digite seu nome..."); }, 500);
+                setTimeout(() => { addBotMessage("Atenção! A taxa de entrega será adicionado ao seu pedido através de um atendente. Para entrega, vou precisar de algumas informações. Primeiro, qual o seu <b>nome</b>?"); setInputMode(true, "Digite seu nome..."); }, 500);
             } else {
                 state = 'WAITING_NAME_RETIRADA';
                 setTimeout(() => { addBotMessage("Perfeito! Qual o <b>nome</b> para a retirada?"); setInputMode(true, "Digite seu nome..."); }, 500);
@@ -1010,14 +1144,65 @@
                 addBotMessage("Você precisa adicionar itens antes de finalizar.", [{ label: 'Ver Menu', action: 'MENU_PRINCIPAL' }]);
                 return;
             }
-            state = 'DONE';
-            setInputMode(false, "Processando pedido...");
-            setTimeout(enviarParaWhatsApp, 800);
+            if (cliente.tipoEntrega === 'entrega') {
+                perguntarFormaPagamento();
+            } else {
+                state = 'DONE';
+                setInputMode(false, "Processando pedido...");
+                setTimeout(enviarParaWhatsApp, 800);
+            }
         }
 
-        function enviarParaWhatsApp() {
-            addBotMessage("Tudo pronto! Gerando seu pedido para o WhatsApp...");
+        function perguntarFormaPagamento() {
+            state = 'PAGAMENTO';
+            addBotMessage("💳 Como você vai pagar?", [
+                { label: '💳 Cartão de crédito / débito', action: 'PAGAMENTO_CARTAO', value: 'cartao' },
+                { label: '💵 Dinheiro', action: 'PAGAMENTO_DINHEIRO', value: 'dinheiro' },
+                { label: '📱 Pix', action: 'PAGAMENTO_PIX', value: 'pix' }
+            ]);
+        }
 
+        function perguntarTroco() {
+            addBotMessage("Vai precisar de troco?", [
+                { label: '✅ Não preciso de troco', action: 'TROCO_NAO', value: 'nao' }
+            ]);
+            setTimeout(() => {
+                addBotMessage("Se precisar de troco, para quanto?");
+                setInputMode(true, "Ex: 50, 100...");
+                state = 'WAITING_TROCO';
+            }, 600);
+        }
+
+        function mostrarChavePix() {
+            state = 'DONE';
+            setInputMode(false, "Processando pedido...");
+            setTimeout(() => {
+                chatBody.insertAdjacentHTML('beforeend', `
+                    <div class="message-row msg-bot-row">
+                        <div class="message msg-bot">
+                            📱 <b>Pagamento via Pix</b><br><br>
+                            Chave Pix (Celular):<br>
+                            <span id="pix-key" style="font-size:18px; font-weight:bold; letter-spacing:1px; color:var(--success-color);">(14) 99621-3939</span><br>
+                            <span style="font-size:13px; color:var(--text-muted);">Em nome de <b>Elias Marichi</b></span><br><br>
+                            <button onclick="copiarChavePix()" style="background:var(--success-color);border:none;color:#1c1c2b;padding:8px 16px;border-radius:10px;cursor:pointer;font-weight:bold;font-size:13px;margin-top:4px;">
+                                📋 Copiar chave Pix
+                            </button>
+                        </div>
+                    </div>
+                `);
+                scrollToBottom();
+                setTimeout(mostrarBotaoWhatsApp, 800);
+            }, 600);
+        }
+
+        function copiarChavePix() {
+            navigator.clipboard.writeText('14996213939').then(() => {
+                const btn = document.querySelector('[onclick="copiarChavePix()"]');
+                if (btn) { btn.textContent = '✅ Chave copiada!'; btn.disabled = true; }
+            });
+        }
+
+        function gerarLinkWhatsApp() {
             let total = 0;
             let itensTexto = "";
             cart.forEach(item => {
@@ -1029,15 +1214,23 @@
                 ? `*Tipo:* Entrega \n*Endereço:* ${cliente.rua}, ${cliente.numero} - ${cliente.bairro}${cliente.complemento && cliente.complemento.toLowerCase() !== 'não' ? ' (' + cliente.complemento + ')' : ''}`
                 : `*Tipo:* Retirada no local`;
 
-            const mensagem = `*NOVO PEDIDO* \n\n*Cliente:* ${cliente.nome}\n${enderecoTexto}\n\n*ITENS DO PEDIDO:*\n-----------------------------------\n${itensTexto}-----------------------------------\n*TOTAL A PAGAR: ${formatarMoeda(total)}*`;
+            let pagamentoTexto = '';
+            if (cliente.pagamento) {
+                pagamentoTexto = `\n*Forma de pagamento:* ${cliente.pagamento}`;
+                if (cliente.troco && cliente.troco !== 'Sem troco') {
+                    pagamentoTexto += ` (${cliente.troco})`;
+                }
+            }
 
-            const linkWhatsapp = `https://wa.me/${ZAP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
+            const mensagem = `*NOVO PEDIDO* \n\n*Cliente:* ${cliente.nome}\n${enderecoTexto}${pagamentoTexto}\n\n*ITENS DO PEDIDO:*\n-----------------------------------\n${itensTexto}-----------------------------------\n*TOTAL A PAGAR: ${formatarMoeda(total)}*`;
+            return `https://wa.me/${ZAP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
+        }
 
+        function mostrarBotaoWhatsApp() {
+            const linkWhatsapp = gerarLinkWhatsApp();
+            addBotMessage("Tudo pronto! Clique no botão acima para enviar ou recomeçar seu pedido.");
             setTimeout(() => {
                 chatBody.insertAdjacentHTML('beforeend', `
-                    <div class="message-row msg-bot-row">
-                        <div class="message msg-bot">Prontinho! Se o seu WhatsApp não abrir automaticamente, clique no botão abaixo para enviar o pedido.</div>
-                    </div>
                     <div class="options-container">
                         <a href="${linkWhatsapp}" target="_blank" style="text-decoration:none;">
                             <button class="option-btn" style="background-color:#2ed573; color:#1c1c2b; border-color:#2ed573; font-weight:bold; justify-content:center;">
@@ -1048,8 +1241,13 @@
                     </div>
                 `);
                 scrollToBottom();
-                window.open(linkWhatsapp, '_blank');
-            }, 1500);
+            }, 400);
+        }
+
+        function enviarParaWhatsApp() {
+            state = 'DONE';
+            setInputMode(false, "Processando pedido...");
+            setTimeout(mostrarBotaoWhatsApp, 800);
         }
     </script>
 </body>
