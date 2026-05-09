@@ -1196,22 +1196,12 @@
                             Chave Pix (Celular):<br>
                             <span id="pix-key" style="font-size:18px; font-weight:bold; letter-spacing:1px; color:var(--success-color);">(14) 99621-3939</span><br>
                             <span style="font-size:13px; color:var(--text-muted);">Em nome de <b>Elias Marichi</b></span><br><br>
-                            <button onclick="copiarChavePix()" style="background:var(--success-color);border:none;color:#1c1c2b;padding:8px 16px;border-radius:10px;cursor:pointer;font-weight:bold;font-size:13px;margin-top:4px;">
-                                📋 Copiar chave Pix
-                            </button>
                         </div>
                     </div>
                 `);
                 scrollToBottom();
                 setTimeout(mostrarBotaoWhatsApp, 800);
             }, 600);
-        }
-
-        function copiarChavePix() {
-            navigator.clipboard.writeText('14996213939').then(() => {
-                const btn = document.querySelector('[onclick="copiarChavePix()"]');
-                if (btn) { btn.textContent = '✅ Chave copiada!'; btn.disabled = true; }
-            });
         }
 
         function gerarLinkWhatsApp() {
@@ -1240,7 +1230,7 @@
 
         function mostrarBotaoWhatsApp() {
             const linkWhatsapp = gerarLinkWhatsApp();
-            addBotMessage("Tudo pronto! Clique no botão acima para enviar ou recomeçar seu pedido.");
+            addBotMessage("Tudo pronto! Um de nosso atendentes irá finalizar seu pedido. Clique no botão acima para enviar ou recomeçar seu pedido.");
             setTimeout(() => {
                 chatBody.insertAdjacentHTML('beforeend', `
                     <div class="options-container">
