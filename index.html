@@ -960,7 +960,7 @@
             cliente.tipoEntrega = tipo;
             if (tipo === 'entrega') {
                 state = 'WAITING_NAME_ENTREGA';
-                setTimeout(() => { addBotMessage("Atenção! A taxa de entrega será adicionado ao seu pedido através de um atendente. Para entrega, vou precisar de algumas informações. Primeiro, qual o seu <b>nome</b>?"); setInputMode(true, "Digite seu nome..."); }, 500);
+                setTimeout(() => { addBotMessage("⚠️ <b>Atenção:</b> A taxa de entrega será informada por um atendente.<br><br><b>Não efetue o pagamento antes da confirmação da taxa de entrega.</b><br><br>Para entrega, vou precisar de algumas informações. Primeiro, qual o seu <b>nome</b>?"); setInputMode(true, "Digite seu nome..."); }, 500);
             } else {
                 state = 'WAITING_NAME_RETIRADA';
                 setTimeout(() => { addBotMessage("Perfeito! Qual o <b>nome</b> para a retirada?"); setInputMode(true, "Digite seu nome..."); }, 500);
