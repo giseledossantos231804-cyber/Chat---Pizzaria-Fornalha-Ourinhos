@@ -816,7 +816,6 @@
                                 <button class="option-btn" onclick="handleOptionClick('${opt.action}', ${param}, '${opt.label}')">
                                     <div class="pizza-btn-top">
                                         <span>${opt.label}</span>
-                                        ${opt.priceText ? `<span class="option-price">${opt.priceText}</span>` : ''}
                                     </div>
                                     <span class="pizza-ingredients">${opt.ingredients}</span>
                                 </button>`;
@@ -825,7 +824,6 @@
                                 <button class="option-btn" onclick="handleOptionClick('${opt.action}', ${param}, '${opt.label}')">
                                     <div class="pizza-btn-top">
                                         <span>${opt.label}</span>
-                                        ${opt.priceText ? `<span class="option-price">${opt.priceText}</span>` : ''}
                                     </div>
                                 </button>`;
                         }
@@ -1022,8 +1020,7 @@
             
             const opcoes = [];
             for (let i = 1; i <= maxPermitido; i++) {
-                let taxaTexto = (i >= 3) ? ' (+ R$ 5,00)' : '';
-                opcoes.push({ label: `${i} Sabor${i > 1 ? 'es' : ''}${taxaTexto}`, action: 'SET_PIZZA_QTD_SABOR', value: i });
+                opcoes.push({ label: `${i} Sabor${i > 1 ? 'es' : ''}`, action: 'SET_PIZZA_QTD_SABOR', value: i });
             }
             opcoes.push({ label: '❌ Cancelar', action: 'CANCELAR_ITEM' });
             addBotMessage(`Você escolheu ${tam.label}. Quantos sabores você quer?`, opcoes);
@@ -1040,17 +1037,9 @@
             
             if (numAtual <= tempOrder.maxSabores) {
                 const opcoes = CARDAPIO.pizzas.map(p => {
-                    const infoPreco = getPrecoPizza(p, tempOrder.tamanhoId);
-                    
-                    let priceText = formatarMoeda(infoPreco.preco);
-                    if (infoPreco.isPromo) {
-                        priceText += ` <span style="color:var(--success-color); font-size:11px; font-weight:normal; margin-left:2px;">(Promoção)</span>`;
-                    }
-
                     return {
                         label: p.name,
                         ingredients: p.ingredients,
-                        priceText: priceText,
                         action: 'ADD_PIZZA_SABOR',
                         value: p.id
                     };
@@ -1074,7 +1063,6 @@
         function escolherTipoBorda(tipo) {
             const opcoes = CARDAPIO.bordas[tipo].map(b => ({
                 label: b.name,
-                priceText: formatarMoeda(b.price),
                 action: 'SET_BORDA',
                 value: b.id
             }));
@@ -1115,15 +1103,6 @@
             const qtdSabores = sabores.length;
             if (qtdSabores === 0) return;
 
-            let precoFinal = sabores.reduce((total, sabor) => {
-                const infoPreco = getPrecoPizza(sabor, tempOrder.tamanhoId);
-                return total + (infoPreco.preco / qtdSabores);
-            }, 0);
-
-            if (qtdSabores >= 3) precoFinal += 5;
-
-            if (tempOrder.borda) precoFinal += tempOrder.borda.price;
-
             const saboresDesc = sabores.map(s =>
                 s.observacao ? `${s.name} (${s.observacao})` : s.name
             ).join(', ');
@@ -1131,8 +1110,8 @@
             const bordaDesc = tempOrder.borda ? ` + Borda ${tempOrder.borda.name}` : '';
             const desc = `Pizza ${tempOrder.tamanho} (${saboresDesc})${bordaDesc}`;
 
-            cart.push({ tipo: 'pizza', descricao: desc, preco: precoFinal });
-            addBotMessage(`✅ ${desc} adicionada ao seu pedido! Valor: ${formatarMoeda(precoFinal)}.`);
+            cart.push({ tipo: 'pizza', descricao: desc });
+            addBotMessage(`✅ ${desc} adicionada ao seu pedido! Um atendente calculará o valor e informará antes da confirmação.`);
             tempOrder = {};
             setTimeout(mostrarMenuPrincipal, 500);
         }
@@ -1140,7 +1119,6 @@
         function iniciarPedidoBebida() {
             const opcoes = CARDAPIO.bebidas.map(b => ({
                 label: b.name,
-                priceText: formatarMoeda(b.price),
                 action: 'ADD_BEBIDA',
                 value: b.id
             }));
@@ -1150,7 +1128,7 @@
 
         function adicionarBebidaCarrinho(bebidaId) {
             const bebida = CARDAPIO.bebidas.find(b => b.id === bebidaId);
-            cart.push({ tipo: 'bebida', descricao: bebida.name, preco: bebida.price });
+            cart.push({ tipo: 'bebida', descricao: bebida.name });
             addBotMessage(`✅ ${bebida.name} adicionada ao pedido!`);
             setTimeout(mostrarMenuPrincipal, 500);
         }
@@ -1162,12 +1140,10 @@
             }
 
             let resumo = "<b>Resumo do seu Pedido:</b><br><br>";
-            let total = 0;
             cart.forEach(item => {
-                resumo += `• ${item.descricao} - ${formatarMoeda(item.preco)}<br>`;
-                total += item.preco;
+                resumo += `• ${item.descricao}<br>`;
             });
-            resumo += `<br><b>Total: ${formatarMoeda(total)}</b>`;
+            resumo += `<br><span style="font-size:13px;color:var(--text-muted)">Um atendente calculará o valor total e informará em seguida.</span>`;
 
             addBotMessage(resumo, [
                 { label: '🍕 Adicionar mais itens', action: 'MENU_PRINCIPAL' },
@@ -1210,11 +1186,9 @@
         }
 
         function gerarLinkWhatsApp() {
-            let total = 0;
             let itensTexto = "";
             cart.forEach(item => {
-                itensTexto += `1x ${item.descricao} - ${formatarMoeda(item.preco)}\n`;
-                total += item.preco;
+                itensTexto += `1x ${item.descricao}\n`;
             });
 
             let enderecoTexto = cliente.tipoEntrega === 'entrega'
@@ -1229,13 +1203,13 @@
                 }
             }
 
-            const mensagem = `*NOVO PEDIDO* \n\n*Cliente:* ${cliente.nome}\n${enderecoTexto}${pagamentoTexto}\n\n*ITENS DO PEDIDO:*\n-----------------------------------\n${itensTexto}-----------------------------------\n*TOTAL A PAGAR: ${formatarMoeda(total)}*`;
+            const mensagem = `*NOVO PEDIDO* \n\n*Cliente:* ${cliente.nome}\n${enderecoTexto}${pagamentoTexto}\n\n*ITENS DO PEDIDO:*\n-----------------------------------\n${itensTexto}-----------------------------------\n_Por favor, calcule o valor total e informe ao cliente._`;
             return `https://wa.me/${ZAP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
         }
 
         function mostrarBotaoWhatsApp() {
             const linkWhatsapp = gerarLinkWhatsApp();
-            addBotMessage("Tudo pronto! Envie seu pedido que um atendente fará a confirmação de tempo e valores ou recomece seu pedido.");
+            addBotMessage("Tudo pronto! Envie seu pedido que um atendente fará o cálculo do valor total, confirmará o tempo de entrega/retirada ou recomece seu pedido.");
             setTimeout(() => {
                 chatBody.insertAdjacentHTML('beforeend', `
                     <div class="options-container">
