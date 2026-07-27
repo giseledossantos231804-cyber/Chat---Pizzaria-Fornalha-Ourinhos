@@ -389,15 +389,7 @@
 
             <!-- Detalhes Finais e Forma de Pagamento -->
             <div class="bg-gray-50 p-6 border-t border-gray-100 space-y-4">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Forma de Pagamento Preferida</label>
-                    <select id="forma-pagamento" class="w-full p-3 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
-                        <option value="Pix">Pix</option>
-                        <option value="Cartão de Crédito">Cartão de Crédito</option>
-                        <option value="Cartão de Débito">Cartão de Débito</option>
-                        <option value="Dinheiro">Dinheiro</option>
-                    </select>
-                </div>
+               
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Observações Gerais do Pedido</label>
@@ -499,104 +491,90 @@
         // Mapeamento direto das promoções com ID e valor para tamanho grande
         const promocoes = {
             Mussarela: { grande: 50.00 },
-            marguerita: { grande: 55.00 },
-            frango_catupiry: { grande: 50.00 }
+            Dois_Queijos: { grande: 50.00},
+            Baiana: { grande: 50.00},
+            Calabresa: { grande: 50.00},
+            Escarola: { grande: 50.00},
+            Escarola_2: { grande: 50.00},
+            Frango_Catupiry: { grande: 50.00},
+            Marguerita: { grande: 50.00},
+            Milho: { grande: 50.00}
         };
 
         const sabores = [
-            // Salgadas
-            {
-                id: 'Mussarela',
-                nome: 'Mussarela',
-                categoria: 'pizzas',
-                ingredientes: ['Molho', 'Mussarela', 'Tomate', 'Orégano', 'Azeitonas'],
-                precos: { broto: 35.00, media: 48.00, grande: 59.00 }
-            },
-            {
-                id: 'portuguesa',
-                nome: 'Portuguesa',
-                categoria: 'pizzas',
-                ingredientes: ['Presunto', 'Ovos', 'Ervilha', 'Mussarela', 'Cebola fatiada', 'Azeitonas pretas', 'Molho de tomate'],
-                precos: { broto: 38.00, media: 52.00, grande: 65.00 }
-            },
-            {
-                id: 'frango_catupiry',
-                nome: 'Frango com Catupiry',
-                categoria: 'pizzas',
-                ingredientes: ['Peito de frango desfiado', 'Catupiry original', 'Milho verde', 'Mussarela', 'Molho de tomate'],
-                precos: { broto: 39.00, media: 54.00, grande: 66.00 }
-            },
-            {
-                id: 'bacon',
-                nome: 'Bacon com Milho',
-                categoria: 'pizzas',
-                ingredientes: ['Bacon crocante', 'Milho verde', 'Mussarela', 'Cebola fatiada', 'Molho de tomate'],
-                precos: { broto: 37.00, media: 51.00, grande: 63.00 }
-            },
-            {
-                id: 'marguerita',
-                nome: 'Marguerita',
-                categoria: 'pizzas',
-                ingredientes: ['Mussarela', 'Rodelas de tomate fresco', 'Manjericão fresco', 'Parmesão ralado', 'Molho de tomate'],
-                precos: { broto: 34.00, media: 46.00, grande: 57.00 }
-            },
-            {
-                id: 'quatro_queijos',
-                nome: 'Quatro Queijos',
-                categoria: 'pizzas',
-                ingredientes: ['Mussarela', 'Provolone', 'Parmesão ralado', 'Gorgonzola', 'Molho de tomate'],
-                precos: { broto: 42.00, media: 58.00, grande: 72.00 }
-            },
-            {
-                id: 'pepperoni',
-                nome: 'Pepperoni',
-                categoria: 'pizzas',
-                ingredientes: ['Fatias de pepperoni condimentado', 'Mussarela', 'Gorgonzola', 'Molho de tomate'],
-                precos: { broto: 45.00, media: 62.00, grande: 78.00 }
-            },
-            // Doces
-            {
-                id: 'brigadeiro',
-                nome: 'Brigadeiro Belga',
-                categoria: 'doces',
-                ingredientes: ['Chocolate ao leite belga', 'Granulado belga', 'Cerejas em calda', 'Leite condensado'],
-                precos: { broto: 40.00, media: 55.00, grande: 69.00 }
-            },
-            {
-                id: 'banana_canela',
-                nome: 'Banana com Canela',
-                categoria: 'doces',
-                ingredientes: ['Bananas fatiadas', 'Leite condensado', 'Canela em pó', 'Açúcar cristal'],
-                precos: { broto: 35.00, media: 48.00, grande: 59.00 }
-            },
-            {
-                id: 'romeu_julieta',
-                nome: 'Romeu e Julieta',
-                categoria: 'doces',
-                ingredientes: ['Mussarela especial', 'Goiabada cremosa da fazenda'],
-                precos: { broto: 37.00, media: 50.00, grande: 62.00 }
-            }
+            { id: 'Mussarela', nome: 'Mussarela', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Tomate', 'Orégano', 'Azeitonas',''], precos: { broto: 39.00, media: 45.00, grande: 53.00 } },
+            { id: 'Dois_Queijos', nome: 'Dois Queijos', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Catupiry', 'Orégano', 'Azeitonas'], precos: { broto: 39.00, media: 45.00, grande: 53.00 } },
+            { id: 'Três_Queijos', nome: 'Três Queijos', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Catupiry', 'Provolone', 'Orégano', 'Azeitonas'], precos: { broto: 40.00, media: 46.00, grande: 53.00 } },
+            { id: 'Quatro_Queijos', nome: 'Quatro Queijos', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Catupiry', 'Provolone', 'Gorgonzola', 'Orégano', 'Azeitonas'], precos: { broto: 42.00, media: 48.00, grande: 55.00 } },
+            { id: 'Cinco_Queijos', nome: 'Cinco Queijos', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Catupiry', 'Provolone', 'Gorgonzola', 'Parmesão', 'Orégano', 'Azeitonas'], precos: { broto: 43.00, media: 50.00, grande: 57.00 } },
+            { id: 'Seis_Queijos', nome: 'Seis Queijos', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Catupiry', 'Provolone', 'Gorgonzola', 'Parmesão', 'Cheddar', 'Orégano', 'Azeitonas'], precos: { broto: 46.00, media: 52.00, grande: 58.00 } },
+            { id: 'Alho_Óleo', nome: 'Alho e Óleo', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Alho', 'Orégano', 'Azeitonas'], precos: { broto: 40.00, media: 46.00, grande: 53.00 } },
+            { id: 'Bacon', nome: 'Bacon', categoria: 'pizzas', ingredientes: ['Molho' ,'Mussarela', 'Bacon', 'Orégano','Azeitonas'], precos: { broto: 40.00, media: 46.00, grande: 53.00 } },
+            { id: 'Baiana', nome: 'Baiana', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Calabresa Moída', 'Cebola', 'Pimenta', 'Orégano','Azeitonas'], precos: { broto: 42.00, media: 48.00, grande: 55.00 } },
+            { id: 'Brócolis', nome: 'Brócolis', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Brócolis', 'Orégano','Azeitonas'], precos: { broto: 42.00, media: 48.00, grande: 55.00 } },
+            { id: 'Brócolis_Bacon', nome: 'Brócolis com Bacon', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Brócolis', 'Bacon', 'Orégano','Azeitonas'], precos: { broto: 48.00, media: 54.00, grande: 61.00 } },    
+            { id: 'Calabresa', nome: 'Calabresa', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Calabresa Fatiada', 'Cebola', 'Orégano','Azeitonas'], precos: { broto: 40.00, media: 46.00, grande: 53.00 } },
+            { id: 'Canadense', nome: 'Canadense', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Lombinho', 'Bacon', 'Orégano','Azeitonas'], precos: { broto: 44.00, media: 50.00, grande: 57.00 } },
+            { id: 'Capitão', nome: 'Capitão', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Calabresa Moída', 'Bacon', 'Orégano','Azeitonas'], precos: { broto: 42.00, media: 48.00, grande: 55.00 } },
+            { id: 'Carne_Seca', nome: 'Carne Seca', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Catupiry', 'Carne Seca Desfiada', 'Cebola', 'Orégano','Azeitonas'], precos: { broto: 59.00, media: 64.00, grande: 70.00 } },
+            { id: 'Champignon', nome: 'Champignon', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Champignon', 'Milho', 'Alho', 'Orégano','Azeitonas'], precos: { broto: 44.00, media: 50.00, grande: 57.00 } },
+            { id: 'Domichel', nome: 'Domichel', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Champignon', 'Palmito', 'Alho', 'Orégano','Azeitonas'], precos: { broto: 52.00, media: 58.00, grande: 65.00 } },
+            { id: 'Escarola', nome: 'Escarola', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Escarola', 'Orégano','Azeitonas'], precos: { broto: 40.00, media: 46.00, grande: 53.00 } },
+            { id: 'Escarola_2', nome: 'Escarola 2', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Escarola', 'Bacon', 'Orégano','Azeitonas'], precos: { broto: 42.00, media: 47.00, grande: 54.00 } },
+            { id: 'Escarola_3', nome: 'Escarola 3', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Escarola', 'Aliche', 'Alho', 'Orégano','Azeitonas'], precos: { broto: 44.00, media: 50.00, grande: 57.00 } },
+            { id: 'Fornalha', nome: 'Fornalha', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Champignon', 'Palmito', 'Milho', 'Ervilha', 'Orégano','Azeitonas'], precos: { broto: 44.00, media: 50.00, grande: 59.00 } },
+            { id: 'Fortaleza', nome: 'Fortaleza', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Presunto', 'Bacon', 'Ervilha', 'Milho', 'Palmito', 'Ovo', 'Orégano','Azeitonas'], precos: { broto: 44.00, media: 50.00, grande: 57.00 } },
+            { id: 'Francesa', nome: 'Francesa', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Frango Desfiado', 'Milho', 'Bacon', 'Orégano','Azeitonas'], precos: { broto: 46.00, media: 52.00, grande: 59.00 } },
+            { id: 'Frango_Catupiry', nome: 'Frango com Catupiry', categoria: 'pizzas', ingredientes: ['Molho', 'Frango Desfiado', 'Catupiry', 'Orégano','Azeitonas'], precos: { broto: 41.00, media: 47.00, grande: 54.00 } },
+            { id: 'Frango_Mussarela', nome: 'Frango com Mussarela', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Frango Desfiado', 'Orégano','Azeitonas'], precos: { broto: 42.00, media: 48.00, grande: 55.00 } },
+            { id: 'Italiana', nome: 'Italiana', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Presunto', 'Bacon', 'Milho', 'Orégano','Azeitonas'], precos: { broto: 42.00, media: 50.00, grande: 57.00 } },
+            { id: 'Lenheira', nome: 'Lenheira', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Atum', 'Ervilha', 'Cebola', 'Ovo', 'Orégano','Azeitonas'], precos: { broto: 52.00, media: 57.00, grande: 63.00 } },
+            { id: 'Lombo', nome: 'Lombo', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Lombinho', 'Orégano','Azeitonas'], precos: { broto: 42.00, media: 48.00, grande: 55.00 } },
+            { id: 'Margherita', nome: 'Margherita', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Manjericão', 'Orégano','Azeitonas'], precos: { broto: 44.00, media: 50.00, grande: 53.00 } },
+            { id: 'Milho', nome: 'Milho', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Milho', 'Orégano','Azeitonas'], precos: { broto: 40.00, media: 46.00, grande: 53.00 } },
+            { id: 'Moda_da_Casa', nome: 'Moda da Casa', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Presunto', 'Ervilha', 'Palmito', 'Ovo', 'Orégano','Azeitonas'], precos: { broto: 47.00, media: 52.00, grande: 59.00 } },
+            { id: 'Napolitana', nome: 'Napolitana', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Provolone', 'Orégano','Azeitonas'], precos: { broto: 39.00, media: 45.00, grande: 52.00 } },
+            { id: 'Palmito', nome: 'Palmito', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Palmito', 'Orégano','Azeitonas'], precos: { broto: 44.00, media: 50.00, grande: 57.00 } },
+            { id: 'Peperone', nome: 'Peperone', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Peperone', 'Orégano','Azeitonas'], precos: { broto: 52.00, media: 58.00, grande: 65.00 } },
+            { id: 'Portuguesa', nome: 'Portuguesa', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Presunto', 'Ervilha', 'Cebola', 'Ovo', 'Orégano','Azeitonas'], precos: { broto: 44.00, media: 50.00, grande: 57.00 } },
+            { id: 'Presunto', nome: 'Presunto', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Presunto', 'Orégano','Azeitonas'], precos: { broto: 40.00, media: 48.00, grande: 53.00 } },
+            { id: 'Romana', nome: 'Romana', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Aliche', 'Parmesão', 'Orégano','Azeitonas'], precos: { broto: 45.00, media: 51.00, grande: 59.00 } },
+            { id: 'Strogonoff_de_Carne', nome: 'Strogonoff de Carne', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Strogonoff de Carne', 'Batata Palha', 'Orégano','Azeitonas'], precos: { broto: 59.00, media: 64.00, grande: 70.00 } },
+            { id: 'Strogonoff_de_Frango', nome: 'Strogonoff de Frango', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Strogonoff de Frango', 'Batata Palha', 'Orégano','Azeitonas'], precos: { broto: 59.00, media: 64.00, grande: 70.00 } },
+            { id: 'Tomate_Seco', nome: 'Tomate Seco', categoria: 'pizzas', ingredientes: ['Molho', 'Mussarela', 'Tomate Seco', 'Rúcula', 'Orégano','Azeitonas'], precos: { broto: 59.00, media: 64.00, grande: 70.00 } },
+            { id: 'Banana_Nevada', nome: 'Banana Nevada', categoria: 'doces', ingredientes: ['Creme de Leite', 'Banana', 'Canela em Pó', 'Chocolate Branco'], precos: { broto: 39.00, media: 49.00, grande: 55.00 } },
+            { id: 'Chocolate', nome: 'Chocolate', categoria: 'doces', ingredientes: ['Creme de Leite', 'Chocolate Branco', 'Chocolate ao Leite'], precos: { broto: 59.00, media: 64.00, grande: 70.00 } },
+            { id: 'Romeu_e_Julieta', nome: 'Romeu e Julieta', categoria: 'doces', ingredientes: ['Mussarela', 'Goiabada Cremosa'], precos: { broto: 39.00, media: 45.00, grande: 52.00 } }
         ];
 
         const bordas = [
             { id: 'sem_borda', nome: 'Sem borda', preco: 0 },
-            { id: 'catupiry', nome: 'Catupiry', preco: 8.00 },
-            { id: 'cheddar', nome: 'Cheddar', preco: 8.00 },
-            { id: 'cream_cheese', nome: 'Cream Cheese', preco: 10.00 },
-            { id: 'chocolate', nome: 'Chocolate', preco: 10.00 }
+            { id: 'catupiry', nome: 'Catupiry', preco: 7.00 },
+            { id: 'cheddar', nome: 'Cheddar', preco: 9.00 },
+            { id: 'mussarela', nome: 'Mussarela', preco: 12.00 },
+            { id: 'presunto_mussarela', nome: 'Presundo e Mussarela', preco: 18.00 },
+            { id: 'chocolate', nome: 'Chocolate', preco: 18.00 },
+            { id: 'chocolate_branco', nome: 'Chocolate Branco', preco: 18.00 },
+            { id: 'romeu_julieta', nome: 'Romeu e Julieta', preco: 9.00 }
         ];
 
         const bebidas = [
-            { id: 'coca_2l', nome: 'Coca-Cola 2L', preco: 16.00, descricao: 'Garrafa Pet familiar gelada', categoria: 'bebidas' },
-            { id: 'coca_lata', nome: 'Coca-Cola Lata 350ml', preco: 6.00, descricao: 'Lata trincando de gelada', categoria: 'bebidas' },
-            { id: 'guarana_2l', nome: 'Guaraná Antarctica 2L', preco: 14.00, descricao: 'Garrafa Pet familiar gelada', categoria: 'bebidas' },
-            { id: 'suco_uva', nome: 'Suco de Uva Del Valle 400ml', preco: 9.00, descricao: 'Suco de uva integral de copo', categoria: 'bebidas' },
-            { id: 'agua_gas', nome: 'Água Mineral com Gás 500ml', preco: 4.50, descricao: 'Gelo e limão opcionais', categoria: 'bebidas' }
-        ];
+                { id: 'coca_2l', nome: 'Coca-Cola 2L', preco: 15.00, descricao: 'Normal ou Zero', categoria: 'bebidas' },
+                { id: 'guarana_2l', nome: 'Guaraná Antárctica', preco: 15.00, descricao: 'Normal ou Zero', categoria: 'bebidas' },
+                { id: 'fanta', nome: 'Fanta Laranja 2L', preco: 12.00, descricao: 'Normal', categoria: 'bebidas' },
+                { id: 'sprite', nome: 'Sprite 2L', preco: 12.00, descricao: 'Normal', categoria: 'bebidas' },
+                { id: 'conquista', nome: 'Conquista Guaraná 2L', preco: 9.00, descricao: 'Normal', categoria: 'bebidas' },
+                { id: 'conticola', nome: 'Conti-Cola 2L', preco: 9.00, descricao: 'Normal', categoria: 'bebidas' },
+                { id: 'Cola_1l', nome: 'Coca-Cola 1L', preco: 10.00, descricao: 'Normal ou Zero', categoria: 'bebidas' },
+                { id: 'Guarana_1l', nome: 'Guaraná Antárctica 1L', preco: 10.00, descricao: 'Normal ou Zero', categoria: 'bebidas' },
+                { id: 'Agua', nome: 'Água Mineral 500ml', preco: 3.00, descricao: 'Com ou Sem Gás', categoria: 'bebidas' },
+                { id: 'H2O', nome: 'H2O 500ml', preco: 4.50, descricao: 'Limoneto', categoria: 'bebidas' },
+                { id: 'lata', nome: 'Refrigerante Lata', preco: 5.00, descricao: 'Diversos', categoria: 'bebidas' }
+            ];
 
         const sobremesas = [
-            { id: 'pudim', nome: 'Pudim de Leite Ninho', preco: 12.00, descricao: 'Receita artesanal super cremosa', categoria: 'sobremesas' },
-            { id: 'petit_gateau', nome: 'Petit Gateau de Chocolate', preco: 18.00, descricao: 'Acompanha sorvete de creme artesanal', categoria: 'sobremesas' }
+            { id: 'Cone', nome: 'Cone Trufado', preco: 9.50, descricao: 'Sabores diversos', categoria: 'sobremesas' },
+            { id: 'Trufa', nome: 'Trufa', preco: 8.00, descricao: 'Sabores diversos', categoria: 'sobremesas' }
         ];
 
         // ----------------- ESTADO GLOBAL DA APLICAÇÃO -----------------
@@ -739,77 +717,130 @@
             renderizarProdutos();
         }
 
+        // Cria um cabeçalho de seção que ocupa a largura total do grid do cardápio
+        function criarTituloSecao(texto, emoji) {
+            const div = document.createElement('div');
+            div.className = "col-span-1 md:col-span-2 flex items-center gap-3 mt-4 mb-1 first:mt-0";
+            div.innerHTML = `
+                <span class="text-lg leading-none">${emoji}</span>
+                <h3 class="text-sm font-extrabold text-gray-700 uppercase tracking-wider whitespace-nowrap">${texto}</h3>
+                <div class="flex-1 h-px bg-gray-200"></div>
+            `;
+            return div;
+        }
+
+        // Constrói o card visual de um sabor de pizza (salgada ou doce)
+        function criarCardSabor(sabor) {
+            const card = document.createElement('div');
+            card.className = "bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex gap-4 cursor-pointer transform hover:translate-y-[-2px]";
+            card.setAttribute('onclick', `abrirModalPizza('${sabor.id}')`);
+
+            // Verifica se o ID do sabor está listado nas promoções para o tamanho "grande"
+            const emPromocao = promocoes[sabor.id] && promocoes[sabor.id].grande !== undefined;
+            const precoGrande = emPromocao ? promocoes[sabor.id].grande : sabor.precos.grande;
+            const precoBroto = sabor.precos.broto;
+            const precoMedia = sabor.precos.media;
+
+            card.innerHTML = `
+                <div class="flex-shrink-0 w-24 h-24 bg-red-50 rounded-2xl flex items-center justify-center text-4xl">
+                    ${sabor.categoria === 'doces' ? '🍫' : '🍕'}
+                </div>
+                <div class="flex flex-col justify-between flex-1">
+                    <div>
+                       <div class="flex items-center justify-between gap-2">
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm md:text-base">
+                                    ${sabor.nome}
+                                </h4>
+                                ${emPromocao ? `
+                                    <span class="inline-block mt-1 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse">
+                                        🔥 PROMOÇÃO
+                                    </span>
+                                ` : ''}
+                            </div>
+
+                            <span class="text-[10px] bg-red-100 text-primary font-bold px-1.5 py-0.5 rounded uppercase">
+                                ${sabor.categoria === 'doces' ? 'Doce' : 'Salgada'}
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1 line-clamp-2">${sabor.ingredientes.join(', ')}</p>
+                    </div>
+                    <div class="flex items-end justify-between mt-2 gap-2">
+                        <div class="grid grid-cols-3 gap-1.5 flex-1">
+                            <div class="flex flex-col items-start bg-gray-50 rounded-lg px-1.5 py-1 border border-gray-100">
+                                <span class="text-[9px] text-gray-400 font-semibold uppercase">Broto</span>
+                                <span class="text-xs font-extrabold text-gray-700">R$ ${precoBroto.toFixed(2).replace('.', ',')}</span>
+                            </div>
+                            <div class="flex flex-col items-start bg-gray-50 rounded-lg px-1.5 py-1 border border-gray-100">
+                                <span class="text-[9px] text-gray-400 font-semibold uppercase">Média</span>
+                                <span class="text-xs font-extrabold text-gray-700">R$ ${precoMedia.toFixed(2).replace('.', ',')}</span>
+                            </div>
+                            <div class="flex flex-col items-start ${emPromocao ? 'bg-red-50 border-red-100' : 'bg-gray-50 border-gray-100'} rounded-lg px-1.5 py-1 border">
+                                <span class="text-[9px] ${emPromocao ? 'text-red-400' : 'text-gray-400'} font-semibold uppercase">Grande</span>
+                                ${emPromocao ? `
+                                    <span class="text-[9px] text-gray-400 line-through leading-none">
+                                        R$ ${sabor.precos.grande.toFixed(2).replace('.', ',')}
+                                    </span>
+                                ` : ''}
+                                <span class="text-xs font-extrabold ${emPromocao ? 'text-red-600' : 'text-gray-700'}">
+                                    R$ ${precoGrande.toFixed(2).replace('.', ',')}
+                                </span>
+                            </div>
+                        </div>
+                        <span class="bg-primary text-white text-xs font-bold p-1.5 rounded-xl flex items-center justify-center shadow-md transform hover:scale-110 active:scale-95 transition-all flex-shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                        </span>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
         function renderizarProdutos() {
             const container = document.getElementById('cardapio-container');
             container.innerHTML = '';
 
             const termo = filtroPesquisa.toLowerCase().trim();
 
-            // 1. FILTRAR E RENDERIZAR PIZZAS (Saborosas e Doces)
-            if (categoriaAtiva === 'todas' || categoriaAtiva === 'pizzas' || categoriaAtiva === 'doces') {
-                sabores.forEach(sabor => {
-                    if (categoriaAtiva !== 'todas' && sabor.categoria !== categoriaAtiva) return;
-                    if (termo && !sabor.nome.toLowerCase().includes(termo) && !sabor.ingredientes.some(i => i.toLowerCase().includes(termo))) return;
-
-                    const card = document.createElement('div');
-                    card.className = "bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex gap-4 cursor-pointer transform hover:translate-y-[-2px]";
-                    card.setAttribute('onclick', `abrirModalPizza('${sabor.id}')`);
-                    
-                    // Verifica se o ID do sabor está listado nas promoções para o tamanho "grande"
-                    const emPromocao = promocoes[sabor.id] && promocoes[sabor.id].grande !== undefined;
-                    const precoGrande = emPromocao ? promocoes[sabor.id].grande : sabor.precos.grande;
-
-                    card.innerHTML = `
-                        <div class="flex-shrink-0 w-24 h-24 bg-red-50 rounded-2xl flex items-center justify-center text-4xl">
-                            ${sabor.categoria === 'doces' ? '🍫' : '🍕'}
-                        </div>
-                        <div class="flex flex-col justify-between flex-1">
-                            <div>
-                               <div class="flex items-center justify-between gap-2">
-                                    <div>
-                                        <h4 class="font-bold text-gray-800 text-sm md:text-base">
-                                            ${sabor.nome}
-                                        </h4>
-                                        ${emPromocao ? `
-                                            <span class="inline-block mt-1 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse">
-                                                🔥 PROMOÇÃO
-                                            </span>
-                                        ` : ''}
-                                    </div>
-
-                                    <span class="text-[10px] bg-red-100 text-primary font-bold px-1.5 py-0.5 rounded uppercase">
-                                        ${sabor.categoria === 'doces' ? 'Doce' : 'Salgada'}
-                                    </span>
-                                </div>
-                                <p class="text-xs text-gray-500 mt-1 line-clamp-2">${sabor.ingredientes.join(', ')}</p>
-                            </div>
-                            <div class="flex justify-between items-end mt-2">
-                                <div>
-                                    <span class="text-[10px] text-gray-400 block font-medium">Grande a partir de</span>
-                                    ${emPromocao ? `
-                                        <span class="text-xs text-gray-400 line-through block">
-                                            R$ ${sabor.precos.grande.toFixed(2).replace('.', ',')}
-                                        </span>
-                                    ` : ''}
-                                    <span class="text-lg font-extrabold ${emPromocao ? 'text-red-600' : 'text-primary'}">
-                                        R$ ${precoGrande.toFixed(2).replace('.', ',')}
-                                    </span>
-                                </div>
-                                <span class="bg-primary text-white text-xs font-bold p-1.5 rounded-xl flex items-center justify-center shadow-md transform hover:scale-110 active:scale-95 transition-all">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-                                </span>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
+            // 1A. FILTRAR E RENDERIZAR PIZZAS SALGADAS
+            if (categoriaAtiva === 'todas' || categoriaAtiva === 'pizzas') {
+                const saboresSalgados = sabores.filter(sabor => {
+                    if (sabor.categoria !== 'pizzas') return false;
+                    if (termo && !sabor.nome.toLowerCase().includes(termo) && !sabor.ingredientes.some(i => i.toLowerCase().includes(termo))) return false;
+                    return true;
                 });
+
+                if (saboresSalgados.length > 0) {
+                    container.appendChild(criarTituloSecao('Pizzas Salgadas', '🍕'));
+                }
+
+                saboresSalgados.forEach(sabor => container.appendChild(criarCardSabor(sabor)));
+            }
+
+            // 1B. FILTRAR E RENDERIZAR PIZZAS DOCES
+            if (categoriaAtiva === 'todas' || categoriaAtiva === 'doces') {
+                const saboresDoces = sabores.filter(sabor => {
+                    if (sabor.categoria !== 'doces') return false;
+                    if (termo && !sabor.nome.toLowerCase().includes(termo) && !sabor.ingredientes.some(i => i.toLowerCase().includes(termo))) return false;
+                    return true;
+                });
+
+                if (saboresDoces.length > 0) {
+                    container.appendChild(criarTituloSecao('Pizzas Doces', '🍫'));
+                }
+
+                saboresDoces.forEach(sabor => container.appendChild(criarCardSabor(sabor)));
             }
 
             // 2. FILTRAR E RENDERIZAR BEBIDAS
             if (categoriaAtiva === 'todas' || categoriaAtiva === 'bebidas') {
-                bebidas.forEach(bebida => {
-                    if (termo && !bebida.nome.toLowerCase().includes(termo) && !bebida.descricao.toLowerCase().includes(termo)) return;
+                const bebidasFiltradas = bebidas.filter(bebida => !termo || bebida.nome.toLowerCase().includes(termo) || bebida.descricao.toLowerCase().includes(termo));
 
+                if (bebidasFiltradas.length > 0) {
+                    container.appendChild(criarTituloSecao('Bebidas', '🥤'));
+                }
+
+                bebidasFiltradas.forEach(bebida => {
                     const card = document.createElement('div');
                     card.className = "bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex gap-4 transform hover:translate-y-[-2px]";
                     
@@ -839,9 +870,13 @@
 
             // 3. FILTRAR E RENDERIZAR SOBREMESAS
             if (categoriaAtiva === 'todas' || categoriaAtiva === 'sobremesas') {
-                sobremesas.forEach(sobremesa => {
-                    if (termo && !sobremesa.nome.toLowerCase().includes(termo) && !sobremesa.descricao.toLowerCase().includes(termo)) return;
+                const sobremesasFiltradas = sobremesas.filter(sobremesa => !termo || sobremesa.nome.toLowerCase().includes(termo) || sobremesa.descricao.toLowerCase().includes(termo));
 
+                if (sobremesasFiltradas.length > 0) {
+                    container.appendChild(criarTituloSecao('Sobremesas', '🍰'));
+                }
+
+                sobremesasFiltradas.forEach(sobremesa => {
                     const card = document.createElement('div');
                     card.className = "bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex gap-4 transform hover:translate-y-[-2px]";
                     
@@ -1440,7 +1475,7 @@
 
         // ----------------- INTEGRAÇÃO COM WHATSAPP -----------------
         function gerarMensagemWhatsApp() {
-            const formaPagamento = document.getElementById('forma-pagamento').value;
+           
             const obsGerais = document.getElementById('pedido-observacoes-gerais').value.trim();
             const total = calcularTotalCarrinho();
 
@@ -1478,7 +1513,7 @@
 
             msg += `==================================\n`;
             msg += `💰 *TOTAL DO PEDIDO:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
-            msg += `💳 *Forma de Pagamento:* ${formaPagamento}\n`;
+        
             
             if (obsGerais) {
                 msg += `💬 *Obs Gerais:* ${obsGerais}\n`;
