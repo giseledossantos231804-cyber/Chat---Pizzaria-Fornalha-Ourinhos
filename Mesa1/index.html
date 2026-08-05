@@ -106,7 +106,7 @@
 
             <!-- Botão 2: Solicitar Atendimento / Chamar Garçom -->
             <button 
-                onclick="chamarGarcom()" 
+                onclick="chamarGarcom(1)" 
                 class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-extrabold py-5 px-6 rounded-3xl shadow-2xl flex items-center justify-between transform hover:scale-[1.02] active:scale-95 transition-all text-lg"
             >
                 <div class="flex items-center gap-3">
@@ -1552,5 +1552,39 @@
             mostrarToast("Fechamento solicitado! Redirecionando para o WhatsApp...", "sucesso");
         }
     </script>
+    <script type="module">
+
+import { db } from "../firebase.js";
+
+import {
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+window.solicitarAtendimento = async function(numeroMesa){
+
+    try{
+
+        await addDoc(collection(db,"atendimentos"),{
+
+            mesa: numeroMesa,
+            status: "pendente",
+            horario: serverTimestamp()
+
+        });
+
+        alert("Atendimento solicitado!");
+
+    }catch(e){
+
+        alert("Erro ao solicitar atendimento.");
+        console.log(e);
+
+    }
+
+}
+
+</script>
 </body>
 </html>
