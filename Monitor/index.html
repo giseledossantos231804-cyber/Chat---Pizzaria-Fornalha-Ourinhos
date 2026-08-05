@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
 
+<meta charset="UTF-8">
+
+<title>Monitor</title>
+
+<style>
+
+body{
+
+    background:#111;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+
+}
+
+#alerta{
+
+    margin-top:100px;
+    font-size:60px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Monitor de Atendimento</h1>
+
+<div id="alerta"></div>
+
+<script type="module">
+
+import { db } from "../firebase.js";
+
+import {
+collection,
+query,
+where,
+onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const alerta=document.getElementById("alerta");
+
+const q=query(
+collection(db,"atendimentos"),
+where("status","==","pendente")
+);
+
+onSnapshot(q,(snapshot)=>{
+
+    if(snapshot.empty){
+
+        alerta.innerHTML="Nenhum chamado.";
+
+        return;
+
+    }
+
+    let html="";
+
+    snapshot.forEach(doc=>{
+
+        const d=doc.data();
+
+        html+=`
+        <h2>
+        🚨 Mesa ${d.mesa}
+        </h2>
+
+        <h3>Solicita atendimento</h3>
+
+        <hr>
+        `;
+
+    });
+
+    alerta.innerHTML=html;
+
+});
+
+</script>
+
+</body>
+
+</html>
