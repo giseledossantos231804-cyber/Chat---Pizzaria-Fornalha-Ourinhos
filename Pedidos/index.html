@@ -836,24 +836,19 @@
         }
 
         // ─── Verificação de horário de funcionamento ───────────────────────────
-        // Seg-Sáb: 17:30 às 23:30  (domingo: fechado)
         function verificarHorario() {
-            const agora = new Date();
-            const diaSemana = agora.getDay(); // 0=Dom, 1=Seg … 6=Sáb
-            const hora = agora.getHours();
-            const minuto = agora.getMinutes();
-            const totalMinutos = hora * 60 + minuto;
-
-            const abertura = 17 * 60 + 30;  // 17:30
-            const fechamento = 23 * 60 + 30; // 23:30
-
-            // Seg(1) a Sáb(6) e dentro do horário
-            const aberto = diaSemana >= 1 && diaSemana <= 6
-                        && totalMinutos >= abertura
-                        && totalMinutos < fechamento;
-
-            return aberto;
-        }
+        const agora = new Date();
+        const diaSemana = agora.getDay(); // 0=Dom, 1=Seg … 6=Sáb
+        const totalMinutos = agora.getHours() * 60 + agora.getMinutes();
+    
+        const abertura = 17 * 60 + 30;   // 17:30
+        const fechamento = 23 * 60 + 30; // 23:30
+    
+        // Terça (2) a Domingo (0) e dentro do horário; segunda fechada
+        return diaSemana !== 1
+            && totalMinutos >= abertura
+            && totalMinutos < fechamento;
+    }
 
         window.onload = () => {
             if (!verificarHorario()) {
