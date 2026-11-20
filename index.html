@@ -373,7 +373,7 @@
             <div class="avatar">🍕</div>
             <div class="header-info">
                 <h1>Pizzaria Fornalha de Ourinhos</h1>
-                <p id="status-text">No final, um atendente te informará o tempo para entrega ou retirada.</p>
+                <p id="status-text">Envie seu pedido e um atendente te informará o tempo e o valor.</p>
             </div>
         </header>
 
@@ -386,7 +386,7 @@
                 apenas durante o horário de funcionamento.
             </div>
             <div class="closed-hours">
-                🗓️ <strong>Segunda a Sábado</strong><br>
+                🗓️ <strong>Terça a Domingo</strong><br>
                 <span>18:00</span> às <span>23:30</span>
             </div>
             <div style="margin-top:20px; font-size:13px; color:var(--text-muted);">
@@ -458,7 +458,7 @@
                     id: 'p8', 
                     name: 'Atum',
                     ingredients: 'Molho de tomate, mussarela, atum ralado, cebola, orégano e azeitonas',
-                    prices: { broto: 50, media: 56, grande: 64 } 
+                    prices: { broto: 52, media: 56, grande: 64 } 
                 },
                 { 
                     id: 'p9', 
@@ -659,23 +659,31 @@
                     prices: { broto: 44, media: 50, grande: 58 } 
                 },
                 {
-                    id: 'p42', 
+                    id: 'p42',
+                    name: 'Banana Nevada',
+                    ingredients: 'Creme de Leite, banana, chocolate branco, canela em pó',
+                    prices: {broto: 49, media: 59, grande: 65}
+                },
+                {
+                    id: 'p43',
                     name: 'Chocolate',
                     ingredients: 'Creme de leite, chocolate ao leite e chocolate branco',
                     prices: { broto: 56, media: 62, grande: 70 } 
                 },
                 { 
-                    id: 'p43', 
+                    id: 'p44', 
                     name: 'Romeu e Julieta',
                     ingredients: 'Goiabada e mussarela',
                     prices: { broto: 39, media: 45, grande: 53 } 
                 }
             ],
             bebidas: [
-                { id: 'b1', name: 'Coca-Cola 2L', price: 15.00 },
-                { id: 'b2', name: 'Coca-Cola Zero 2L', price: 15.00 },
-                { id: 'b3', name: 'Coca-Cola 1L', price: 10.00 },
-                { id: 'b4', name: 'Coca-Cola Zero 1L', price: 10.00},
+                { id: 'b1', name: 'Coca-Cola 2L', price: 16.00 },
+                { id: 'b2', name: 'Coca-Cola Zero 2L', price: 16.00 },
+                { id: 'b3', name: 'Coca-Cola 1L', price: 11.00 },
+                { id: 'b4', name: 'Coca-Cola Zero 1L', price: 11.00},
+                { id: 'b25', name: 'Coca-Cola 600ml', price: 9.00},
+                { id: 'b26', name: 'Coca-Cola 600ml Zero', price: 9.00},
                 { id: 'b5', name: 'Guaraná Antárctica 2L', price: 15.00 },
                 { id: 'b6', name: 'Guaraná Antártica Zero 2L', price: 15.00 },
                 { id: 'b7', name: 'Guaraná Antárctica 1L', price: 10.00 },
@@ -690,7 +698,7 @@
                 { id: 'b16', name: 'Guaraná Antárctica Zero Lata', price: 5.00},
                 { id: 'b17', name: 'Fanta Lata', price: 5.00},
                 { id: 'b18', name: 'Sprite Lata', price: 5.00 },
-                { id: 'b19', name: 'Energético Monster Lata', price: 12.00 },
+                //{ id: 'b19', name: 'Energético Monster Lata', price: 12.00 },
                 { id: 'b20', name: 'Energético Red Bull Lata', price: 12.00 },
                 { id: 'b21', name: 'Cerveja Skol Lata', price: 5.00},
                 { id: 'b22', name: 'Cerveja Brahma Lata', price: 5.00 },
@@ -699,8 +707,8 @@
             ],
             bordas: {
                 doce: [
-                    { id: 'bd1', name: 'Chocolate', price: 18.00 },
-                    { id: 'bd2', name: 'Romeu e Julieta', price: 18.00 }
+                    { id: 'bd1', name: 'Chocolate', price: 20.00 },
+                    { id: 'bd2', name: 'Romeu e Julieta', price: 20.00 }
                 ],
                 salgada: [
                     { id: 'bs1', name: 'Mussarela', price: 12.00 },
@@ -836,19 +844,19 @@
         }
 
         // ─── Verificação de horário de funcionamento ───────────────────────────
-       function verificarHorario() {
-    const agora = new Date();
-    const diaSemana = agora.getDay(); // 0=Dom, 1=Seg … 6=Sáb
-    const totalMinutos = agora.getHours() * 60 + agora.getMinutes();
-
-    const abertura = 17 * 60 + 30;   // 17:30
-    const fechamento = 23 * 60 + 30; // 23:30
-
-    // Terça (2) a Domingo (0) e dentro do horário; segunda fechada
-    return diaSemana !== 1
-        && totalMinutos >= abertura
-        && totalMinutos < fechamento;
-}
+        function verificarHorario() {
+        const agora = new Date();
+        const diaSemana = agora.getDay(); // 0=Dom, 1=Seg … 6=Sáb
+        const totalMinutos = agora.getHours() * 60 + agora.getMinutes();
+    
+        const abertura = 17 * 60 + 30;   // 17:30
+        const fechamento = 23 * 60 + 30; // 23:30
+    
+        // Terça (2) a Domingo (0) e dentro do horário; segunda fechada
+        return diaSemana !== 1
+            && totalMinutos >= abertura
+            && totalMinutos < fechamento;
+    }
 
         window.onload = () => {
             if (!verificarHorario()) {
